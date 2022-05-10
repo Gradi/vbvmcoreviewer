@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Release;Debug</Configurations>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Helpers.fs" />
+    <Compile Include="ResultComputation.fs" />
+    
+    <Compile Include="BinaryOps\Types.fs" />
+    <Compile Include="BinaryOps\Operations.fs" />
+
+    <Compile Include="LibElf\Types.fs" />
+    <Compile Include="LibElf\ElfHeader.fs" />
+
+    <Compile Include="Program.fs" />
+
+    <None Include="Scratchpad.fsx" />
+  </ItemGroup>
+
+</Project>

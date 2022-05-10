@@ -1,0 +1,2 @@
+﻿printfn "LOL"
+let wut = ()
