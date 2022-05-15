@@ -1,24 +1,38 @@
 module VBoxVmcoreViewer.LibElf.Types
 
-open VBoxVmcoreViewer.BinaryOps.Types
-
-type Class =
+type EIClass =
     | None
     | ElfClass32
     | ElfClass64
 
-type ElfStream = { Class: Class; Stream: Stream }
-
-type DataEncoding =
+type EIDataEncoding =
     | None
     | LittleEndian
     | BigEndian
 
-type Identification =
-    { Class: Class
-      DataEncoding: DataEncoding
+type EIOsAbi =
+    | None
+    | HPux
+    | NetBsd
+    | Linux
+    | Solaris
+    | Aix
+    | Irix
+    | FreeBsd
+    | Tru64
+    | ModeSto
+    | OpenBsd
+    | OpenVms
+    | Nsk
+    | Aros
+    | Arm
+    | Standalone
+
+type EIIdentification =
+    { Class: EIClass
+      DataEncoding: EIDataEncoding
       Version: int
-      OsAbi: int
+      OsAbi: EIOsAbi
       AbiVersion: int }
 
 type Type =
@@ -31,14 +45,11 @@ type Type =
 
 type Machine =
     | None
-    | Sparc
     | I386
-    | Sparc32Plus
-    | Sparcv9
     | Amd64
 
-type Header =
-    { Identification: Identification
+type ElfHeader =
+    { Identification: EIIdentification
       Type: Type
       Machine: Machine
       Version: int

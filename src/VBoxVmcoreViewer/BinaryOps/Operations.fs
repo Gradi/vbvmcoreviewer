@@ -1,7 +1,7 @@
 module VBoxVmcoreViewer.BinaryOps.Operations
 
-open VBoxVmcoreViewer.BinaryOps.Types
 open FSharp.NativeInterop
+open VBoxVmcoreViewer.BinaryOps.Types
 
 let nativeEndianess =
     if System.BitConverter.IsLittleEndian then Endianess.Little
