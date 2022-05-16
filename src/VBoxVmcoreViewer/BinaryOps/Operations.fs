@@ -49,7 +49,23 @@ let mkbytesLe = mkbytes Endianess.Little
 
 let mkbytesBe = mkbytes Endianess.Big
 
+let readString n stream =
+    let bytes = readNBytes n stream
+    System.Text.Encoding.ASCII.GetString bytes.Bytes
 
+let alignStream (n: int) stream =
+    let n = n |> int64
+    let rem = stream.Stream.Position % n
+    if rem <> 0 then
+        stream.Stream.Seek (n - rem, System.IO.SeekOrigin.Current) |> ignore
 
+let seekb n stream =
+    stream.Stream.Seek (n, System.IO.SeekOrigin.Begin) |> ignore
 
+let seekc n stream =
+    stream.Stream.Seek (n, System.IO.SeekOrigin.Current) |> ignore
 
+let seeke n stream =
+    stream.Stream.Seek (n, System.IO.SeekOrigin.End) |> ignore
+
+let skipBytes = seekc

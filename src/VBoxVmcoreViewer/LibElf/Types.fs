@@ -1,5 +1,8 @@
 module VBoxVmcoreViewer.LibElf.Types
 
+open VBoxVmcoreViewer.BinaryOps.Types
+open VBoxVmcoreViewer.LibElf.VirtualBox
+
 type EIClass =
     | None
     | ElfClass32
@@ -35,7 +38,7 @@ type EIIdentification =
       OsAbi: EIOsAbi
       AbiVersion: int }
 
-type Type =
+type ElfType =
     | None
     | Relocatable
     | Executable
@@ -50,7 +53,7 @@ type Machine =
 
 type ElfHeader =
     { Identification: EIIdentification
-      Type: Type
+      Type: ElfType
       Machine: Machine
       Version: int
       Entry: uint64
@@ -63,3 +66,45 @@ type ElfHeader =
       SectionHeaderEntrySize: uint64
       SectionHeaderNumber: uint64
       SectionHeaderStringIndex: uint64 }
+
+type PHType =
+    | Null
+    | Load
+    | Dynamic
+    | Interp
+    | Note
+    | Shlib
+    | Phdr
+    | ProcessorSpecific
+
+type PHFlags =
+    | Read
+    | Write
+    | Execute
+
+type ProgramHeader =
+    { Type: PHType
+      Flags: PHFlags list
+      Offset: uint64
+      VirtualAddress: uint64
+      PhysicalAddress: uint64
+      FileSize: uint64
+      MemorySize: uint64
+      Alignment: uint64 }
+
+type NoteType =
+    | Prstatus
+    | Prfpreg
+    | Prpsinfo
+    | VBoxCore of VBCoreDescriptor
+    | VBoxCpu of CpuDump
+
+type Note =
+    { Name: string
+      Type: NoteType }
+
+type ElfFile =
+    { Header: ElfHeader
+      ProgramHeaders: ProgramHeader list
+      Notes: Note list
+      Stream: Stream }

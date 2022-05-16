@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Tests\TestResultComputation.fs" />
     <Compile Include="Tests\BinaryOps\TestOperations.fs" />
   </ItemGroup>
 

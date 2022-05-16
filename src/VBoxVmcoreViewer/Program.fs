@@ -1,18 +1,28 @@
 ﻿open System.IO
 open VBoxVmcoreViewer.BinaryOps.Operations
 open VBoxVmcoreViewer.BinaryOps.Types
-open VBoxVmcoreViewer.LibElf.ElfHeader
+open VBoxVmcoreViewer.LibElf.ElfFile
+open VBoxVmcoreViewer.LibElf.PrettyPrint
 
 let readAndPrintHeader file =
     try
         use fstream = File.OpenRead (file)
         let stream = { Endianess = nativeEndianess; Stream = fstream }
-        let header = readElfHeader stream
+        let elfFile = readElfFile stream
 
-        match header with
-        | Ok (header, _) ->
+        match elfFile with
+        | Ok elfFile ->
             printfn $"%s{file}"
-            printfn $"%A{header}"
+
+            printfn $"%A{elfFile.Header}"
+
+            printfn $"Notes (%d{List.length elfFile.Notes}):"
+            List.iter (printfn "%A") elfFile.Notes
+
+            printfn $"Program headers (%d{List.length elfFile.ProgramHeaders}):"
+            printfn $"%s{prettyPhHeader}"
+            List.iter (fun header -> printfn $"%s{prettyPh header}") elfFile.ProgramHeaders
+
             0
         | Error msg ->
             printfn $"%s{msg}"

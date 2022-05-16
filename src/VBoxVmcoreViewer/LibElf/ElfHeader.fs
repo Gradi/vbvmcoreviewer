@@ -73,12 +73,12 @@ let readEiIdentification stream = hopefully {
 let readType stream =
     let typeVal = readBytes<uint16> stream
     match typeVal with
-    | 0us -> Type.None
-    | 1us -> Type.Relocatable
-    | 2us -> Type.Executable
-    | 3us -> Type.Dynamic
-    | 4us ->  Type.Core
-    | _ -> Type.ProcessorSpecific
+    | 0us -> ElfType.None
+    | 1us -> ElfType.Relocatable
+    | 2us -> ElfType.Executable
+    | 3us -> ElfType.Dynamic
+    | 4us -> ElfType.Core
+    | _ -> ElfType.ProcessorSpecific
 
 let readMachine stream = hopefully {
     let machine = readBytes<uint16> stream
@@ -97,13 +97,10 @@ let readElfHeader stream = hopefully {
                 | EIDataEncoding.BigEndian -> Ok { stream with Endianess = Endianess.Big }
                 | EIDataEncoding.None -> errorf "DataEncoding of value 'None' is unsupported.")
     }
-    do! hopefully {
-        if eiIdent.Class <> EIClass.ElfClass64 then
-            return! errorf $"Unsupported EI_CLASS value (%A{eiIdent.Class}).
-                             I support only %A{EIClass.ElfClass64}."
-        else
-            return ()
-    }
+
+    if eiIdent.Class <> EIClass.ElfClass64 then
+        return! errorf $"Unsupported EI_CLASS value (%A{eiIdent.Class}).
+                         I support only %A{EIClass.ElfClass64}."
 
     let elfType = readType stream
     let! machine = readMachine stream

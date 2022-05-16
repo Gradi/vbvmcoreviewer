@@ -13,8 +13,13 @@
     <Compile Include="BinaryOps\Types.fs" />
     <Compile Include="BinaryOps\Operations.fs" />
 
+    <Compile Include="LibElf\VirtualBox.fs" />
     <Compile Include="LibElf\Types.fs" />
     <Compile Include="LibElf\ElfHeader.fs" />
+    <Compile Include="LibElf\ProgramHeader.fs" />
+    <Compile Include="LibElf\Notes.fs" />
+    <Compile Include="LibElf\ElfFile.fs" />
+    <Compile Include="LibElf\PrettyPrint.fs" />
 
     <Compile Include="Program.fs" />
 
