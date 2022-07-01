@@ -69,3 +69,12 @@ let seeke n stream =
     stream.Stream.Seek (n, System.IO.SeekOrigin.End) |> ignore
 
 let skipBytes = seekc
+
+let uint64Bit (bit: int) (value: uint64): Bit = ((value >>> bit) &&& 0x1UL) = 0x1UL
+
+let uint64Bits (bits: int list) (value: uint64) : uint64 =
+    let result =
+        bits |>
+        List.fold (fun state bit -> state ||| (value &&& (0x1UL <<< bit))) 0UL
+
+    result >>> (List.min bits)

@@ -21,6 +21,10 @@
     <Compile Include="LibElf\ElfFile.fs" />
     <Compile Include="LibElf\PrettyPrint.fs" />
 
+    <Compile Include="X86\Flags.fs" />
+    <Compile Include="X86\Paging.fs" />
+    <Compile Include="X86\X86.fs" />
+
     <Compile Include="Program.fs" />
 
     <None Include="Scratchpad.fsx" />
