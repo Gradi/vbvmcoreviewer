@@ -78,3 +78,26 @@ let uint64Bits (bits: int list) (value: uint64) : uint64 =
         List.fold (fun state bit -> state ||| (value &&& (0x1UL <<< bit))) 0UL
 
     result >>> (List.min bits)
+
+
+let KB = 2.0 ** 10 |> uint64
+let MB = 2.0 ** 20 |> uint64
+let GB = 2.0 ** 30 |> uint64
+let TB = 2.0 ** 40 |> uint64
+
+let bytesToHumanString (byteSize: uint64) =
+    let sizes = [
+        ( TB |> double, nameof TB )
+        ( GB |> double, nameof GB )
+        ( MB |> double, nameof MB )
+        ( KB |> double, nameof KB )
+    ]
+
+    let pair =
+        sizes
+        |> List.map (fun (size, postfix) -> ((double byteSize) / size, postfix))
+        |> List.tryFind (fun (size, _) -> size >= 1.0)
+
+    match pair with
+    | Some (size, postfix) -> sprintf $"%.1f{size} %s{postfix}"
+    | None -> sprintf $"%u{byteSize} bytes"

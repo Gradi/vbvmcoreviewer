@@ -18,7 +18,7 @@ let readElfFile stream = hopefully {
              Stream = stream }
 }
 
-let readMem<'a when 'a : unmanaged> (index: uint64) elfFile =
+let readMem<'a when 'a : unmanaged> (index: uint64) elfFile: Result<'a, string> =
     let size = sizeof<'a> |> uint64
 
     let header =
@@ -28,10 +28,17 @@ let readMem<'a when 'a : unmanaged> (index: uint64) elfFile =
         |> Seq.tryFind (fun h -> index >= h.PhysicalAddress && index < (h.PhysicalAddress + h.MemorySize - size))
 
     match header with
-    | Option.None -> errorf $"Index (%d{index}) out of range."
+    | Option.None -> errorf $"Index (0x%X{index}) out of range"
     | Some header ->
         if size <= header.FileSize then
             seekToPHeader header elfFile.Stream
+            seekc (int64 (index - header.PhysicalAddress)) elfFile.Stream
             Ok (readBytes<'a> elfFile.Stream)
         else
             Ok Unchecked.defaultof<'a>
+
+let getTotalPhysicalMemorySize elfFile: uint64 =
+    elfFile.ProgramHeaders
+    |> List.filter (fun ph -> ph.Type = PHType.Load)
+    |> List.map (fun ph -> ph.MemorySize)
+    |> List.sum

@@ -9,7 +9,8 @@
 
   <ItemGroup>
     <Compile Include="ResultComputation.fs" />
-    
+    <Compile Include="ContextComputation.fs" />
+
     <Compile Include="BinaryOps\Types.fs" />
     <Compile Include="BinaryOps\Operations.fs" />
 
@@ -19,15 +20,20 @@
     <Compile Include="LibElf\ProgramHeader.fs" />
     <Compile Include="LibElf\Notes.fs" />
     <Compile Include="LibElf\ElfFile.fs" />
-    <Compile Include="LibElf\PrettyPrint.fs" />
 
     <Compile Include="X86\Flags.fs" />
     <Compile Include="X86\Paging.fs" />
     <Compile Include="X86\X86.fs" />
 
+    <Compile Include="Views\View.fs" />
+
     <Compile Include="Program.fs" />
 
     <None Include="Scratchpad.fsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Raylib-cs" Version="4.0.0.1" />
   </ItemGroup>
 
 </Project>

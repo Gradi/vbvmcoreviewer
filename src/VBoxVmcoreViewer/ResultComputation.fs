@@ -2,6 +2,11 @@ module VBoxVmcoreViewer.ResultComputation
 
 let errorf format = Error (sprintf format)
 
+let isOk result =
+    match result with
+    | Ok _ -> true
+    | Error _ -> false
+
 let allOrErrored (seq: Result<'a, 'b> seq) =
     use enum = seq.GetEnumerator ()
 

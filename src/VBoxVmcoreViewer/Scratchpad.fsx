@@ -1,10 +1,13 @@
-#load "ResultComputation.fs"
-open VBoxVmcoreViewer.ResultComputation
+#load "ContextComputation.fs"
+open VBoxVmcoreViewer.ContextComputation
 
-let t: Result<int, string> = hopefully {
-    let! t1 = Ok 1
-    let! t2 = Error "not good"
-    let! t3 = Ok 3
-    if t2 = 2 then return 4
-    else return 5
-}
+type MyContext = { X: int; Y: int }
+
+
+let draw = ContextBuilder<MyContext> ()
+
+
+draw {
+    let! w = context
+    printfn $"Sample %d{w.X}"
+} <| { X = 1; Y = 0 }
