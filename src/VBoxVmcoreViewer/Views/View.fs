@@ -51,12 +51,14 @@ let private defaultFont = lazy (
     let fontSize = 20
     let spacing = (float32 fontSize) / 10f // https://github.com/raysan5/raylib/blob/master/src/rtext.c#L1018
 
+    let path = System.IO.Path.Combine (System.Environment.SystemDirectory, "..", "Fonts", "DejaVuSansMono.ttf" )
+
     {
     FontSize = fontSize
     FontColor = Color.BLACK
     FontSelectedColor = Color.RED
     Spacing = spacing
-    Font = Raylib.LoadFont @"C:\Windows\Fonts\JetBrainsMono-Regular.ttf"
+    Font = Raylib.LoadFont path
     })
 
 let private getDrawState () = {
