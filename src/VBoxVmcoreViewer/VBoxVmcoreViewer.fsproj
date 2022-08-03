@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="ResultComputation.fs" />
     <Compile Include="ContextComputation.fs" />
+    <Compile Include="TextWriterComputation.fs" />
 
     <Compile Include="BinaryOps\Types.fs" />
     <Compile Include="BinaryOps\Operations.fs" />
@@ -26,6 +27,7 @@
     <Compile Include="X86\X86.fs" />
 
     <Compile Include="Views\View.fs" />
+    <Compile Include="Html\HtmlDumper.fs" />
 
     <Compile Include="Program.fs" />
 
